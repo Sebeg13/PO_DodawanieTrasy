@@ -8,6 +8,34 @@
     android:orientation="vertical"
     tools:context=".view.MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/activity_main_toolbar"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:title=" ">
+
+        <ImageButton
+            android:id="@+id/activity_main_back_button"
+            android:src="@drawable/back_triangle"
+            android:background="@color/colorPrimary"
+            android:layout_width="40dp"
+            android:layout_height="42dp"
+            />
+
+        <TextView
+            android:id="@+id/activity_main_title_text_view"
+            android:text="@string/app_name"
+            android:textSize="25sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <EditText
         android:id="@+id/punktAEditText"
         android:layout_width="240dp"
@@ -17,7 +45,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="@string/hintPunktA"/>
+        android:hint="@string/hintPunktA"
+        android:background="@drawable/custom_edit_text"/>
 
     <EditText
         android:id="@+id/punktBEditText"
@@ -27,7 +56,8 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="@string/hintPunktB" />
+        android:hint="@string/hintPunktB"
+        android:background="@drawable/custom_edit_text"/>
 
     <EditText
         android:id="@+id/odlegloscEditText"
@@ -38,7 +68,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="@string/hintOdleglosc"/>
+        android:hint="@string/hintOdleglosc"
+        android:background="@drawable/custom_edit_text"/>
 
     <EditText
         android:id="@+id/sumaRoznicEditText"
@@ -49,7 +80,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="@string/hintSumaRoznic"/>
+        android:hint="@string/hintSumaRoznic"
+        android:background="@drawable/custom_edit_text"/>
 
 
 
