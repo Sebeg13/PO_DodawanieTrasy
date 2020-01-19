@@ -5,4 +5,5 @@
     <string name="hintPunktB">Punkt pośredni B</string>
     <string name="hintOdleglosc">Odległość (w metrach)</string>
     <string name="hintSumaRoznic">Suma różnić poziomów (w metrach)</string>
+    <string name="okButton">Ok</string>
 </resources>

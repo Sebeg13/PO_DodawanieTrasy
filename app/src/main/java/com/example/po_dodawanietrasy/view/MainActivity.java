@@ -1,15 +1,23 @@
-package com.example.po_dodawanietrasy;
+package com.example.po_dodawanietrasy.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.po_dodawanietrasy.R;
 import com.example.po_dodawanietrasy.presenter.DodawanieTrasyPresenter;
 import com.example.po_dodawanietrasy.view.DodawanieTrasyView;
 
@@ -22,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements DodawanieTrasyVie
     private Button dodajButton;
 
     private TextWatcher textWatcher;
+
+    private PopupWindow popupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,17 +103,21 @@ public class MainActivity extends AppCompatActivity implements DodawanieTrasyVie
 
     @Override
     public void displayDodanoTrase() {
-        Toast.makeText(getApplicationContext(),"Dodano trasę", Toast.LENGTH_SHORT).show();
+        showPopup("Dodano trasę");
+
+//        Toast.makeText(getApplicationContext(),"Dodano trasę", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void displayBrakDostepuDoBazy() {
-        Toast.makeText(getApplicationContext(),"Brak dostępu do bazy danych", Toast.LENGTH_SHORT).show();
+        showPopup("Brak dostępu do bazy danych");
+//        Toast.makeText(getApplicationContext(),"Brak dostępu do bazy danych", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void displayNiepoprawneDane() {
-        Toast.makeText(getApplicationContext(),"Niepoprawne dane", Toast.LENGTH_SHORT).show();
+        showPopup("Niepoprawne dane");
+//        Toast.makeText(getApplicationContext(),"Niepoprawne dane", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -118,6 +132,35 @@ public class MainActivity extends AppCompatActivity implements DodawanieTrasyVie
             dodajButton.setEnabled(false);
         else
             dodajButton.setEnabled(true);
+
+    }
+
+    private void showPopup(String message){
+        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context. LAYOUT_INFLATER_SERVICE);
+        View layout = layoutInflater.inflate(R.layout.popup_window,null);
+
+        popupWindow = new PopupWindow(this);
+        popupWindow.setContentView(layout);
+        popupWindow.setWidth(800);
+        popupWindow.setHeight(600);
+        popupWindow.setFocusable(true);
+
+
+        // prevent clickable background
+        popupWindow.setBackgroundDrawable(null);
+
+        popupWindow.showAtLocation(layout, Gravity.CENTER, 1, 1);
+
+        TextView txtMessage = (TextView) layout.findViewById(R.id.messageTextView);
+        txtMessage.setText(message);
+
+        Button okButton = (Button) layout.findViewById(R.id.okButton);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
 
     }
 
