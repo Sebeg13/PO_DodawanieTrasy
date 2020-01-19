@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Dodawanie trasy</string>
+    <string name="dodajButton">Dodaj</string>
+    <string name="hintPunktA">Punkt pośredni A</string>
+    <string name="hintPunktB">Punkt pośredni B</string>
+    <string name="hintOdleglosc">Odległość (w metrach)</string>
+    <string name="hintSumaRoznic">Suma różnić poziomów (w metrach)</string>
+</resources>
