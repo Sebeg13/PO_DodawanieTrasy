@@ -39,6 +39,9 @@ public class DodawanieTrasyPresenter {
 
             model.updateData(pointA, pointB, distance, sumOfDifferences, countPointsForTrip(distance,sumOfDifferences));
         }
+        else{
+            displayMessage("Niepoprawne dane");
+        }
     }
 
     /**
