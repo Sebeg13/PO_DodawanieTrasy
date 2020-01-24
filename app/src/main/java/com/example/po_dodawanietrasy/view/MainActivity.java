@@ -1,6 +1,5 @@
 package com.example.po_dodawanietrasy.view;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -8,28 +7,27 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.po_dodawanietrasy.R;
 import com.example.po_dodawanietrasy.presenter.DodawanieTrasyPresenter;
-import com.example.po_dodawanietrasy.view.DodawanieTrasyView;
 
+/**
+ * Klasa MainActivity to klasa głównej aktywności
+ */
 public class MainActivity extends AppCompatActivity implements DodawanieTrasyView {
     private DodawanieTrasyPresenter presenter;
-    private EditText punktAEditText;
-    private EditText punktBEditText;
-    private EditText odlegloscEditText;
-    private EditText sumaRoznicEditText;
-    private Button dodajButton;
+    private EditText pointAEditText;
+    private EditText pointBEditText;
+    private EditText distanceEditText;
+    private EditText sumaOfDifferencesEditText;
+    private Button addButton;
 
     private TextWatcher textWatcher;
 
@@ -41,13 +39,13 @@ public class MainActivity extends AppCompatActivity implements DodawanieTrasyVie
         setContentView(R.layout.activity_main);
         setSupportActionBar((Toolbar)findViewById(R.id.activity_main_toolbar));
 
-        presenter = new DodawanieTrasyPresenter(this);
+        presenter = new DodawanieTrasyPresenter(this, getApplicationContext());
 
-        punktAEditText = findViewById(R.id.punktAEditText);
-        punktBEditText = findViewById(R.id.punktBEditText);
-        odlegloscEditText = findViewById(R.id.odlegloscEditText);
-        sumaRoznicEditText = findViewById(R.id.sumaRoznicEditText);
-        dodajButton = findViewById(R.id.dodajButton);
+        pointAEditText = findViewById(R.id.punktAEditText);
+        pointBEditText = findViewById(R.id.punktBEditText);
+        distanceEditText = findViewById(R.id.odlegloscEditText);
+        sumaOfDifferencesEditText = findViewById(R.id.sumaRoznicEditText);
+        addButton = findViewById(R.id.dodajButton);
 
         textWatcher = new TextWatcher() {
             @Override
@@ -66,79 +64,58 @@ public class MainActivity extends AppCompatActivity implements DodawanieTrasyVie
             }
         };
 
-        punktAEditText.addTextChangedListener(textWatcher);
-        punktBEditText.addTextChangedListener(textWatcher);
-        odlegloscEditText.addTextChangedListener(textWatcher);
-        sumaRoznicEditText.addTextChangedListener(textWatcher);
+        pointAEditText.addTextChangedListener(textWatcher);
+        pointBEditText.addTextChangedListener(textWatcher);
+        distanceEditText.addTextChangedListener(textWatcher);
+        sumaOfDifferencesEditText.addTextChangedListener(textWatcher);
 
-        dodajButton.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dodajTrase();
+                presenter.updateDataToDataBase();
             }
         });
     }
 
+
     @Override
-    public void dodajTrase() {
-        presenter.updateDataToDataBase();
+    public String getPointA() {
+        return pointAEditText.getText().toString();
     }
 
     @Override
-    public String getPunktA() {
-        return punktAEditText.getText().toString();
+    public String getPointB() {
+        return pointBEditText.getText().toString();
     }
 
     @Override
-    public String getPunktB() {
-        return punktBEditText.getText().toString();
+    public String getDistance() {
+        return distanceEditText.getText().toString();
     }
 
     @Override
-    public String getOdleglosc() {
-        return odlegloscEditText.getText().toString();
+    public String getSumOfDifferences() {
+        return sumaOfDifferencesEditText.getText().toString();
     }
 
-    @Override
-    public String getSumaRoznic() {
-        return sumaRoznicEditText.getText().toString();
-    }
-
-    @Override
-    public void displayDodanoTrase() {
-        showPopup("Dodano trasę");
-
-//        Toast.makeText(getApplicationContext(),"Dodano trasę", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void displayBrakDostepuDoBazy() {
-        showPopup("Brak dostępu do bazy danych");
-//        Toast.makeText(getApplicationContext(),"Brak dostępu do bazy danych", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void displayNiepoprawneDane() {
-        showPopup("Niepoprawne dane");
-//        Toast.makeText(getApplicationContext(),"Niepoprawne dane", Toast.LENGTH_SHORT).show();
-    }
 
 
     public void checkFieldForEmptyValues(){
         String s1, s2, s3, s4;
-        s1 = odlegloscEditText.getText().toString();
-        s2 = sumaRoznicEditText.getText().toString();
-        s3 = punktAEditText.getText().toString();
-        s4 = punktBEditText.getText().toString();
+        s1 = distanceEditText.getText().toString();
+        s2 = sumaOfDifferencesEditText.getText().toString();
+        s3 = pointAEditText.getText().toString();
+        s4 = pointBEditText.getText().toString();
 
         if(s1.equals("")||s2.equals("")||s3.equals("")||s4.equals(""))
-            dodajButton.setEnabled(false);
+            addButton.setEnabled(false);
         else
-            dodajButton.setEnabled(true);
+            addButton.setEnabled(true);
 
     }
 
-    private void showPopup(String message){
+    @Override
+    public void showPopup(String message){
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context. LAYOUT_INFLATER_SERVICE);
         View layout = layoutInflater.inflate(R.layout.popup_window,null);
 
