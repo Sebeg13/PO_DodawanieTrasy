@@ -37,7 +37,7 @@ public class DodawanieTrasyPresenter {
             double distance = Double.valueOf(distanceStr);
             double sumOfDifferences = Double.valueOf(sumOfDifferencesStr);
 
-            model.updateData(pointA, pointB, distance, sumOfDifferences);
+            model.updateData(pointA, pointB, distance, sumOfDifferences, countPointsForTrip(distance,sumOfDifferences));
         }
     }
 
@@ -57,6 +57,19 @@ public class DodawanieTrasyPresenter {
      */
     public static boolean validateData(String distance, String sumOfDifferences) {
         return distance.matches("^[+]?\\d+([.]\\d+)?$") && sumOfDifferences.matches("^[+]?\\d+([.]\\d+)?$");
+    }
+
+    public int countPointsForTrip(double distance, double sumOfDifferences){
+        int points = 0;
+        double pointsForDist = distance/1000;
+        points += pointsForDist;
+        points +=  (pointsForDist % 1) > 0.5 ? 1 : 0;
+
+        double pointsForSumOfDiff = sumOfDifferences / 100;
+        points += pointsForSumOfDiff;
+        points += (pointsForSumOfDiff % 1) > 0.5 ? 1 : 0;
+
+        return points;
     }
 
 }

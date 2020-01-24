@@ -48,7 +48,7 @@ public class DodawanieTrasyManager {
      * @param distance odległość między punktami
      * @param sumOfDifferences suma różnic poziomów między punktami
      */
-    public void updateData(final String pointA, final String pointB, final double distance, final double sumOfDifferences) {
+    public void updateData(final String pointA, final String pointB, final double distance, final double sumOfDifferences, final int pointsForTrip) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ROUTES,
                 new Response.Listener<String>() {
                     @Override
@@ -83,8 +83,8 @@ public class DodawanieTrasyManager {
                 params.put("wysokoscP2", "0");
                 params.put("odleglosc", String.valueOf(distance));
                 params.put("sumaroznic", String.valueOf(sumOfDifferences));
-                params.put("nazwaT", "Trasa1");
                 params.put("idLG", "3");
+                params.put("punkty", String.valueOf(pointsForTrip));
                 return params;
             }
         };
